@@ -29,7 +29,6 @@ const validateLogin = [
         .bail(),
 
     body("password")
-        .trim()
         .notEmpty()
         .withMessage("Password is required.")
         .bail(),
