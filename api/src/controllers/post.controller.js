@@ -33,6 +33,14 @@ async function getPosts(req,res, next){
             orderBy: {
                 createdAt: 'desc'
             },
+            include: {
+                author: {
+                    select: {
+                        id: true,
+                        username: true
+                    }
+                }
+            }
         })
         return res.status(200).json({
             message: 'Posts retrieved successfully',
