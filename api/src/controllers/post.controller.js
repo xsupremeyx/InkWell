@@ -207,5 +207,74 @@ async function deletePost(req, res, next){
     }
 }
 
+async function getOwnPosts(req, res, next){
+    try{
+        const posts = await prisma.post.findMany({
+            where: {
+                authorId: req.user.id
+            },
+            orderBy: {
+                createdAt: 'desc'
+            },
+            include: {
+                author: {
+                    select: {
+                        id: true,
+                        username: true
+                    }
+                }
+            }
+        });
 
-export { createPost, getPosts, getPostById, togglePublish, updatePost, deletePost };
+        return res.status(200).json({
+            message: 'Posts retrieved successfully',
+            posts
+        });
+    }
+    catch(error){
+        next(error);
+    }
+}
+
+async function getOwnPostById(req, res, next){
+    try{
+        const { id } = req.params;
+
+        const post = await prisma.post.findFirst({
+            where: {
+                id: Number(id),
+                authorId: req.user.id
+            },
+            include: {
+                author: {
+                    select: {
+                        id: true,
+                        username: true
+                    }
+                }
+            }
+        });
+
+        if(!post){
+            return res.status(404).json({
+                errors: [
+                    {
+                        field: 'id',
+                        message: 'Post not found'
+                    }
+                ]
+            });
+        }
+
+        return res.status(200).json({
+            message: 'Post retrieved successfully',
+            post
+        });
+    }
+    catch(error){
+        next(error);
+    }
+}
+
+
+export { createPost, getPosts, getPostById, togglePublish, updatePost, deletePost, getOwnPosts, getOwnPostById };

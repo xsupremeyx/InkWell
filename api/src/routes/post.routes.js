@@ -12,12 +12,16 @@ import { createPostValidator, updatePostValidator, postIdParamValidator } from "
 import { commentContentValidator } from "../validators/comment.validators.js";
 
 // controllers imports
-import { createPost, getPosts, getPostById, togglePublish, updatePost, deletePost } from "../controllers/post.controller.js";
+import { createPost, getPosts, getPostById, togglePublish, updatePost, deletePost, getOwnPostById, getOwnPosts } from "../controllers/post.controller.js";
 import { getCommentsByPostId, createComment } from "../controllers/comment.controller.js";
 
 // routes
 
 // comment get and post routes
+
+postRouter.get("/me", requireAuth, requireAuthor, getOwnPosts);
+postRouter.get("/me/:id", requireAuth, requireAuthor, postIdParamValidator, validationError, getOwnPostById);
+
 postRouter.get("/:id/comments", postIdParamValidator, validationError, getCommentsByPostId);
 postRouter.post("/:id/comments", requireAuth, postIdParamValidator, commentContentValidator, validationError, createComment);
 
