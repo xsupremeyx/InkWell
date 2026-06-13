@@ -13,8 +13,8 @@ const createPostValidator = [
         .notEmpty()
         .withMessage("Content is required")
         .bail()
-        .isLength({ min: 6 })
-        .withMessage("Content must be at least 6 characters long")
+        .isLength({ min: 6, max: 10000 })
+        .withMessage("Content must be between 6 and 10,000 characters long")
         .bail(),
 ]
 
@@ -31,8 +31,8 @@ const updatePostValidator = [
         .notEmpty()
         .withMessage("Content is required")
         .bail()
-        .isLength({ min: 6 })
-        .withMessage("Content must be at least 6 characters long")
+        .isLength({ min: 6, max: 10000 })
+        .withMessage("Content must be between 6 and 10,000 characters long")
         .bail(),
 ];
 

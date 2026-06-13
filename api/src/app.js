@@ -1,10 +1,18 @@
 import express from "express";
+import cors from "cors";
 
 import { notFound } from "./middleware/notFound.js";
 import { errorHandler } from "./middleware/errorHandler.js";
 
+
+
 const app = express();
 app.use(express.json());
+
+app.use(cors({
+    origin: process.env.CLIENT_URL,
+    credentials: true,
+}))
 
 import authRouter from "./routes/auth.routes.js"
 import postRouter from "./routes/post.routes.js";
