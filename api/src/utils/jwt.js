@@ -6,7 +6,7 @@ if(!JWT_SECRET) {
 }
 
 function signToken(payload){
-    return jwt.sign(payload, JWT_SECRET, { expiresIn: "3h" ,});
+    return jwt.sign(payload, JWT_SECRET, { expiresIn: "2h" ,});
 }
 
 function verifyToken(token){
