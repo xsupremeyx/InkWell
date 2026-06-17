@@ -34,7 +34,7 @@ export default function Home() {
     <div>
       {/* 🚨 CHANGED: FULL SCREEN HERO SECTION */}
       <section 
-        className="relative min-h-[calc(100vh-4rem)] flex items-center justify-center text-center px-6 overflow-hidden bg-gray-900"
+        className="relative min-h-screen flex items-center justify-center text-center px-6 overflow-hidden bg-gray-900"
       >
         {/* Background Image */}
         <div 
