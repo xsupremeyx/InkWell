@@ -1,17 +1,24 @@
 @import "tailwindcss";
 
 @theme {
+  /* Fonts */
   --font-sans: "Inter", sans-serif;
+  --font-serif: "Playfair Display", serif;
   
-  --color-background: #FAFAFA;
+  /* The new Warm Editorial color palette */
+  --color-background: #FAF8F5;   /* warm off-white paper feel */
   --color-surface: #FFFFFF;
-  --color-text-primary: #111827;
-  --color-text-secondary: #6B7280;
-  --color-accent: #4F46E5;
-  --color-border: #E5E7EB;
+  --color-text-primary: #1C1409; /* warm near-black */
+  --color-text-secondary: #7A6E5E; /* warm gray */
+  --color-accent: #C2651A;       /* terracotta / amber */
+  --color-border: #E8E0D5;       /* subtle warm border */
 }
 
-/* Set the base styles for the whole app */
+/* Enable smooth scrolling for anchor links like "Browse Posts" */
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   background-color: var(--color-background);
   color: var(--color-text-primary);
