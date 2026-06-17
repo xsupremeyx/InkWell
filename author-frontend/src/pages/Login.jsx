@@ -49,7 +49,7 @@ export default function Login() {
                 <div className="hidden md:flex flex-col justify-center relative w-1/2 p-12 overflow-hidden">
                     <div 
                         className="absolute inset-0 z-0 bg-cover bg-center" 
-                        style={{ backgroundImage: `url('/login-bg.jpg')` }}
+                        style={{ backgroundImage: `url('/login-bg.webp')` }}
                     />
                     <div className="absolute inset-0 z-0 bg-black/40" />
                     <div className="relative z-10 text-white">
