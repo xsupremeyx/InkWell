@@ -5,6 +5,12 @@ export default function PostCard({ post }) {
     month: 'short', day: 'numeric', year: 'numeric',
   });
 
+  const stripHtml = (html) => {
+        const doc = new DOMParser().parseFromString(html, 'text/html');
+        return doc.body.textContent || "";
+    };
+
+  const plainTextExcerpt = stripHtml(post.content);
   return (
     <article className="bg-surface rounded-xl p-8 shadow-sm hover:-translate-y-1 hover:shadow-xl transition-all duration-300 flex flex-col h-full border border-border/50">
       <div className="grow">
@@ -22,7 +28,7 @@ export default function PostCard({ post }) {
         </p>
 
         <p className="text-text-secondary mb-8 line-clamp-3 leading-relaxed">
-          {post.content}
+          {plainTextExcerpt.length > 200 ? plainTextExcerpt.slice(0, 200) + '...' : plainTextExcerpt}
         </p>
       </div>
 

@@ -116,9 +116,9 @@ export default function PostDetail() {
 
                 {/* Minimal Avatar Header! */}
                 <div className="flex items-center gap-4">
-                    <img 
-                        src="https://github.com/xsupremeyx.png" 
-                        alt="XSupremeYX" 
+                    <img
+                        src="https://github.com/xsupremeyx.png"
+                        alt="XSupremeYX"
                         className="w-12 h-12 rounded-full border-2 border-accent shadow-sm"
                     />
                     <div className="flex flex-col">
@@ -129,15 +129,21 @@ export default function PostDetail() {
             </header>
 
             {/* Standard, clean text layout (Removed the Drop Cap entirely!) */}
-            <div className="max-w-none text-text-primary whitespace-pre-wrap leading-relaxed text-lg md:text-xl">
-                {post.content}
-            </div>
+            {/* Standard, clean text layout that parses HTML from TinyMCE! */}
+            <div 
+    className="max-w-none text-text-primary leading-relaxed text-lg md:text-xl 
+               [&>p]:mb-6 [&>h1]:font-serif [&>h1]:text-4xl [&>h1]:mb-4 [&>h2]:font-serif [&>h2]:text-3xl [&>h2]:mb-4 
+               [&>ul]:list-disc [&>ul]:pl-6 [&>ul]:mb-6 [&>a]:text-accent hover:[&>a]:underline
+               [&_iframe]:w-full [&_iframe]:aspect-video [&_iframe]:max-w-full [&_iframe]:rounded-lg
+               [&_img]:max-w-full [&_img]:h-auto [&_img]:rounded-lg"
+    dangerouslySetInnerHTML={{ __html: post.content }}
+/>
 
             {/* Author Bio Card */}
             <div className="mt-20 p-8 bg-surface border border-border rounded-2xl flex flex-col sm:flex-row items-center sm:items-start gap-6 shadow-sm">
-                <img 
-                    src="https://github.com/xsupremeyx.png" 
-                    alt="XSupremeYX" 
+                <img
+                    src="https://github.com/xsupremeyx.png"
+                    alt="XSupremeYX"
                     className="w-24 h-24 rounded-full border-4 border-background shadow-md"
                 />
                 <div className="text-center sm:text-left flex-1">

@@ -3,14 +3,14 @@ import { prisma } from '../lib/prisma.js';
 
 async function createPost(req, res, next){
     try{
-        const { title, content } = req.body;
+        const { title, content, published } = req.body;
         const userId = req.user.id;
 
         const newPost = await prisma.post.create({
             data: {
                 title,
                 content,
-                published: false,
+                published: published ?? false,
                 authorId: userId
             }
         })
