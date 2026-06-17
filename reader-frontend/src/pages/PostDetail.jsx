@@ -143,7 +143,8 @@ export default function PostDetail() {
                [&_ol]:list-decimal [&_ol]:pl-6 [&_ol]:mb-6
                [&_a]:text-accent hover:[&_a]:underline
                [&_iframe]:w-full [&_iframe]:aspect-video [&_iframe]:max-w-full [&_iframe]:rounded-lg
-               [&_img]:max-w-full [&_img]:h-auto [&_img]:rounded-lg"
+               [&_img]:max-w-full [&_img]:h-auto [&_img]:rounded-lg
+               [&_table]:block [&_table]:overflow-x-auto [&_table]:max-w-full"
     dangerouslySetInnerHTML={{ __html: post.content }}
 />
 
