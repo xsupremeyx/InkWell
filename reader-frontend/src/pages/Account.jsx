@@ -15,7 +15,6 @@ export default function Account() {
   const [success, setSuccess] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  // Protected Route Logic: If not logged in, kick them out
   useEffect(() => {
     if (!loading && !user) {
       navigate('/login');
@@ -35,7 +34,6 @@ export default function Account() {
     setIsSubmitting(true);
 
     try {
-      // 🚨 DOUBLE CHECK THIS LINE against your API! 
       await apiFetch('/auth/change-password', {
         method: 'PATCH',
         body: JSON.stringify({ currentPassword, newPassword }),
@@ -53,69 +51,70 @@ export default function Account() {
     }
   };
 
-  // Don't render the form while checking auth status
   if (loading || !user) return null;
 
   return (
-    <div className="max-w-md mx-auto mt-12 bg-surface p-8 rounded-xl shadow-sm border border-border">
-      <h2 className="text-2xl font-bold text-text-primary mb-6">Account Settings</h2>
+    <div className="max-w-2xl mx-auto px-6 py-12 md:py-24">
+      <div className="bg-surface p-8 md:p-12 rounded-2xl shadow-sm border border-border">
+        <h2 className="text-3xl font-serif font-bold text-text-primary mb-8">Account Settings</h2>
 
-      {error && (
-        <div className="bg-red-50 text-red-600 p-3 rounded-md mb-4 text-sm border border-red-200">
-          {error}
-        </div>
-      )}
-      
-      {success && (
-        <div className="bg-green-50 text-green-600 p-3 rounded-md mb-4 text-sm border border-green-200">
-          {success}
-        </div>
-      )}
+        {error && (
+          <div className="bg-red-50 text-red-600 p-4 rounded-lg mb-6 text-sm border border-red-200">
+            {error}
+          </div>
+        )}
+        
+        {success && (
+          <div className="bg-green-50 text-green-700 p-4 rounded-lg mb-6 text-sm border border-green-200">
+            {success}
+          </div>
+        )}
 
-      <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-        <div>
-          <label className="block text-sm font-medium text-text-secondary mb-1">Current Password</label>
-          <input
-            type="password"
-            required
-            className="w-full px-4 py-2 border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-accent"
-            value={currentPassword}
-            onChange={(e) => setCurrentPassword(e.target.value)}
-          />
-        </div>
+        <form onSubmit={handleSubmit} className="flex flex-col gap-6">
+          <div>
+            <label className="block text-sm font-medium text-text-secondary mb-2">Current Password</label>
+            <input
+              type="password"
+              required
+              className="w-full px-4 py-3 bg-background border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-accent/50 transition-shadow"
+              value={currentPassword}
+              onChange={(e) => setCurrentPassword(e.target.value)}
+            />
+          </div>
 
-        <div>
-          <label className="block text-sm font-medium text-text-secondary mb-1">New Password</label>
-          <input
-            type="password"
-            required
-            minLength={6}
-            className="w-full px-4 py-2 border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-accent"
-            value={newPassword}
-            onChange={(e) => setNewPassword(e.target.value)}
-          />
-        </div>
+          <div>
+            <label className="block text-sm font-medium text-text-secondary mb-2">New Password</label>
+            <input
+              type="password"
+              required
+              minLength={6}
+              className="w-full px-4 py-3 bg-background border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-accent/50 transition-shadow"
+              value={newPassword}
+              onChange={(e) => setNewPassword(e.target.value)}
+            />
+          </div>
 
-        <div>
-          <label className="block text-sm font-medium text-text-secondary mb-1">Confirm New Password</label>
-          <input
-            type="password"
-            required
-            minLength={6}
-            className="w-full px-4 py-2 border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-accent"
-            value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value)}
-          />
-        </div>
+          <div>
+            <label className="block text-sm font-medium text-text-secondary mb-2">Confirm New Password</label>
+            <input
+              type="password"
+              required
+              minLength={6}
+              className="w-full px-4 py-3 bg-background border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-accent/50 transition-shadow"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+            />
+          </div>
 
-        <button
-          type="submit"
-          disabled={isSubmitting}
-          className="w-full bg-accent text-white font-medium py-2 rounded-md hover:bg-opacity-90 transition disabled:opacity-50 mt-4"
-        >
-          {isSubmitting ? 'Updating...' : 'Update Password'}
-        </button>
-      </form>
+          <button
+            type="submit"
+            disabled={isSubmitting}
+            className="w-full bg-text-primary text-surface font-semibold py-3.5 rounded-full hover:bg-accent transition-colors disabled:opacity-50 mt-4 cursor-pointer"
+          >
+            {isSubmitting ? 'Updating...' : 'Update Password'}
+          </button>
+        </form>
+      </div>
     </div>
   );
 }

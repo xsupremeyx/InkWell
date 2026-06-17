@@ -71,19 +71,24 @@ export default function PostDetail() {
         return <div className="text-center py-24 text-text-secondary">Loading article...</div>;
     }
 
-    if (error || !post) {
+        if (error || !post) {
         return (
-            <div className="max-w-2xl mx-auto py-32 px-6 text-center flex flex-col items-center">
-                <h2 className="text-2xl font-serif font-bold text-text-primary mb-4">Oops!</h2>
-                <p className="text-red-600 bg-red-50 p-4 rounded-md inline-block border border-red-200 mb-6">
-                    {error || 'Post not found.'}
+            <div className="max-w-3xl mx-auto py-32 px-6 text-center flex flex-col items-center justify-center min-h-[50vh]">
+                <span className="text-accent/20 mb-8">
+                    <svg className="w-24 h-24" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                    </svg>
+                </span>
+                <h2 className="text-5xl font-serif font-black text-text-primary mb-4 tracking-tight">Post Unavailable</h2>
+                <p className="text-xl text-text-secondary mb-10 max-w-md">
+                    {error || "We couldn't find the article you were looking for. It may have been moved or deleted."}
                 </p>
 
                 <Link
                     to="/"
-                    className="inline-flex items-center gap-2 px-6 py-2.5 mt-4 bg-surface border border-border rounded-full text-sm font-medium text-text-secondary hover:text-text-primary hover:bg-gray-50 hover:shadow-sm transition-all w-max mx-auto"
+                    className="inline-flex items-center gap-2 px-8 py-3 bg-text-primary text-surface rounded-full text-sm font-semibold hover:bg-accent transition-colors"
                 >
-                    <span aria-hidden="true">&larr;</span> Back to Home
+                    <span aria-hidden="true">&larr;</span> Return Home
                 </Link>
             </div>
         );
@@ -117,7 +122,7 @@ export default function PostDetail() {
                 </div>
             </header>
 
-            <div className="prose prose-lg md:prose-xl max-w-none text-text-primary whitespace-pre-wrap leading-relaxed">
+            <div className="max-w-none text-text-primary whitespace-pre-wrap leading-relaxed">
                 {post.content}
             </div>
 
