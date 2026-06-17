@@ -33,26 +33,26 @@ export default function Home() {
   return (
     <div>
       {/* 🚨 CHANGED: FULL SCREEN HERO SECTION */}
-      <section 
+      <section
         className="relative min-h-screen flex items-center justify-center text-center px-6 overflow-hidden bg-gray-900"
       >
         {/* Background Image */}
-        <div 
+        <div
           className="absolute inset-0 z-0 bg-cover bg-center bg-no-repeat"
           style={{ backgroundImage: `url(${HERO_IMAGE_URL})` }}
         />
         {/* Dark Gradient Overlay for text legibility */}
         <div className="absolute inset-0 z-0 bg-linear-to-b from-black/70 via-black/40 to-black/80" />
-        
+
         {/* Hero Content */}
         <div className="relative z-10 max-w-3xl mx-auto -mt-16">
-          <h1 className="font-serif text-5xl md:text-7xl font-black text-white mb-6 leading-tight drop-shadow-lg">
+          <h1 className="font-serif text-4xl sm:text-5xl md:text-7xl font-black text-white mb-6 leading-tight drop-shadow-lg px-2">
             A space for thoughtful writing.
           </h1>
-          <p className="text-lg md:text-xl text-white/80 max-w-2xl mx-auto mb-10 font-medium drop-shadow">
+          <p className="text-base sm:text-lg md:text-xl text-white/80 max-w-2xl mx-auto mb-10 font-medium drop-shadow px-4">
             Independent voices. Editorial quality. Read articles from passionate authors.
           </p>
-          <button 
+          <button
             onClick={handleScrollToPosts}
             className="inline-flex items-center gap-2 px-8 py-3 border-2 border-white/80 text-white rounded-full font-medium hover:bg-white hover:text-text-primary transition-all duration-300 cursor-pointer"
           >

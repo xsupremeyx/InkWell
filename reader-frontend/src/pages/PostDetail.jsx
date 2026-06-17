@@ -50,7 +50,7 @@ export default function PostDetail() {
             });
 
             setComments([data.comment, ...comments]);
-            setNewComment(''); 
+            setNewComment('');
         } catch (err) {
             const errorMessage = err.errors?.[0]?.message || err.message || 'Failed to post comment';
             setCommentError(errorMessage);
@@ -71,7 +71,7 @@ export default function PostDetail() {
         return <div className="text-center py-24 text-text-secondary">Loading article...</div>;
     }
 
-        if (error || !post) {
+    if (error || !post) {
         return (
             <div className="max-w-3xl mx-auto py-32 px-6 text-center flex flex-col items-center justify-center min-h-[50vh]">
                 <span className="text-accent/20 mb-8">
@@ -101,24 +101,25 @@ export default function PostDetail() {
     return (
         // 🚨 Here is where we added the padding and max-width back!
         <article className="max-w-4xl mx-auto px-6 py-12 md:py-20">
-            
+
             <Link
                 to="/"
                 className="group inline-flex items-center gap-2 mb-12 text-sm font-medium text-text-secondary hover:text-text-primary transition-colors"
             >
-                <span aria-hidden="true" className="group-hover:-translate-x-1 transition-transform">&larr;</span> 
+                <span aria-hidden="true" className="group-hover:-translate-x-1 transition-transform">&larr;</span>
                 Back to posts
             </Link>
 
             <header className="mb-12 border-b border-border pb-10">
-                {/* 🚨 Upgraded to font-serif and slightly larger sizes */}
                 <h1 className="text-4xl md:text-6xl font-serif font-bold text-text-primary mb-6 leading-tight">
                     {post.title}
                 </h1>
-                <div className="text-text-secondary flex items-center gap-2 text-lg">
+
+                {/* 🚨 CHANGED: Stacks on mobile, inline on larger screens! */}
+                <div className="text-text-secondary flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2 text-base md:text-lg">
                     <span>By <span className="font-semibold text-text-primary">{post.author?.username || 'Unknown'}</span></span>
-                    <span className="text-sm">●</span>
-                    <time className="italic">{formattedDate}</time>
+                    <span className="hidden sm:inline text-sm">●</span>
+                    <time className="italic text-text-secondary/80">{formattedDate}</time>
                 </div>
             </header>
 
@@ -175,7 +176,7 @@ export default function PostDetail() {
                         <p className="text-text-secondary text-center py-8 italic text-lg">No comments yet. Be the first!</p>
                     ) : (
                         comments.map((comment) => (
-                            <CommentItem key={comment.id} comment={comment} onUpdate={handleCommentUpdate} onDelete={handleCommentDelete}/>
+                            <CommentItem key={comment.id} comment={comment} onUpdate={handleCommentUpdate} onDelete={handleCommentDelete} />
                         ))
                     )}
                 </div>
