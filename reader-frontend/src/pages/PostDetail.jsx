@@ -128,12 +128,20 @@ export default function PostDetail() {
                 </div>
             </header>
 
-            {/* Standard, clean text layout (Removed the Drop Cap entirely!) */}
-            {/* Standard, clean text layout that parses HTML from TinyMCE! */}
+
             <div 
     className="max-w-none text-text-primary leading-relaxed text-lg md:text-xl 
-               [&>p]:mb-6 [&>h1]:font-serif [&>h1]:text-4xl [&>h1]:mb-4 [&>h2]:font-serif [&>h2]:text-3xl [&>h2]:mb-4 
-               [&>ul]:list-disc [&>ul]:pl-6 [&>ul]:mb-6 [&>a]:text-accent hover:[&>a]:underline
+               [&>p]:mb-6 
+               [&_h1]:font-serif [&_h1]:text-4xl [&_h1]:mb-4 [&_h1]:font-bold
+               [&_h2]:font-serif [&_h2]:text-3xl [&_h2]:mb-4 [&_h2]:font-bold
+               [&_h3]:font-serif [&_h3]:text-2xl [&_h3]:mb-4 [&_h3]:font-bold
+               [&_h4]:font-serif [&_h4]:text-xl [&_h4]:mb-3 [&_h4]:font-bold
+               [&_h5]:font-serif [&_h5]:text-lg [&_h5]:mb-3 [&_h5]:font-bold
+               [&_h6]:font-serif [&_h6]:text-base [&_h6]:mb-3 [&_h6]:font-bold
+               [&_strong]:font-bold
+               [&_ul]:list-disc [&_ul]:pl-6 [&_ul]:mb-6 
+               [&_ol]:list-decimal [&_ol]:pl-6 [&_ol]:mb-6
+               [&_a]:text-accent hover:[&_a]:underline
                [&_iframe]:w-full [&_iframe]:aspect-video [&_iframe]:max-w-full [&_iframe]:rounded-lg
                [&_img]:max-w-full [&_img]:h-auto [&_img]:rounded-lg"
     dangerouslySetInnerHTML={{ __html: post.content }}
