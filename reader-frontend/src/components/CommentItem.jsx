@@ -1,6 +1,7 @@
 import { useState, useContext } from 'react';
 import { AuthContext } from '../context/AuthContext';
 import { apiFetch } from '../api/client';
+import Modal from './Modal'; // <-- Add this!
 
 export default function CommentItem({ comment, onUpdate, onDelete }) {
   const { user } = useContext(AuthContext);
@@ -12,21 +13,24 @@ export default function CommentItem({ comment, onUpdate, onDelete }) {
   const [isEditing, setIsEditing] = useState(false);
   const [editContent, setEditContent] = useState(comment.content);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false); 
   const [error, setError] = useState(null);
 
   const formattedDate = new Date(comment.createdAt).toLocaleDateString('en-US', {
     month: 'short', day: 'numeric', year: 'numeric',
   });
 
-  const handleDelete = async () => {
-    // Standard browser confirmation dialog before deleting!
-    if (!window.confirm("Are you sure you want to delete this comment?")) return;
+  const handleDeleteClick = () => {
+    setIsDeleteModalOpen(true); // Open the beautiful modal!
+  };
 
+  const handleConfirmDelete = async () => {
     try {
       await apiFetch(`/comments/${comment.id}`, { method: 'DELETE' });
-      onDelete(comment.id); // Tell parent to remove it from the screen
+      onDelete(comment.id);
     } catch (err) {
-      alert(err.errors?.[0]?.message || 'Failed to delete comment');
+      setError(err.errors?.[0]?.message || 'Failed to delete comment');
+      setIsDeleteModalOpen(false);
     }
   };
 
@@ -75,8 +79,8 @@ export default function CommentItem({ comment, onUpdate, onDelete }) {
               Edit
             </button>
             <button 
-              onClick={handleDelete}
-              className="text-text-secondary hover:text-red-600 transition-colors"
+              onClick={handleDeleteClick}
+              className="text-text-secondary hover:text-red-600 transition-colors cursor-pointer"
             >
               Delete
             </button>
@@ -121,6 +125,15 @@ export default function CommentItem({ comment, onUpdate, onDelete }) {
       ) : (
         <p className="text-text-primary whitespace-pre-wrap">{comment.content}</p>
       )}
+
+          {/* 🚨 THE NEW MODAL! */}
+      <Modal 
+        isOpen={isDeleteModalOpen}
+        onClose={() => setIsDeleteModalOpen(false)}
+        onConfirm={handleConfirmDelete}
+        title="Delete Comment"
+        message="Are you sure you want to delete this comment? This action cannot be undone."
+      />
     </div>
   );
 }

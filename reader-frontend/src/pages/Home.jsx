@@ -50,7 +50,7 @@ export default function Home() {
             A space for thoughtful writing.
           </h1>
           <p className="text-base sm:text-lg md:text-xl text-white/80 max-w-2xl mx-auto mb-10 font-medium drop-shadow px-4">
-            Independent voices. Editorial quality. Read articles from passionate authors.
+            A single pen. Endless pages.
           </p>
           <button
             onClick={handleScrollToPosts}
