@@ -6,8 +6,6 @@ import CommentItem from '../components/CommentItem';
 
 export default function PostDetail() {
     const { id } = useParams();
-
-    // We need to know if the user is logged in to show the comment form!
     const { user } = useContext(AuthContext);
 
     const [post, setPost] = useState(null);
@@ -16,16 +14,14 @@ export default function PostDetail() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
-    // Form states
     const [newComment, setNewComment] = useState('');
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [commentError, setCommentError] = useState(null);
 
     useEffect(() => {
-        // Fetch both the post AND the comments concurrently
         Promise.all([
             apiFetch(`/posts/${id}`),
-            apiFetch(`/posts/${id}/comments`).catch(() => ({ comments: [] })) // If comments fail, don't crash
+            apiFetch(`/posts/${id}/comments`).catch(() => ({ comments: [] }))
         ])
             .then(([postData, commentsData]) => {
                 setPost(postData.post);
@@ -53,9 +49,8 @@ export default function PostDetail() {
                 body: JSON.stringify({ content: newComment }),
             });
 
-            // Add the new comment to the top of our local state array immediately
             setComments([data.comment, ...comments]);
-            setNewComment(''); // Clear the text box
+            setNewComment(''); 
         } catch (err) {
             const errorMessage = err.errors?.[0]?.message || err.message || 'Failed to post comment';
             setCommentError(errorMessage);
@@ -65,31 +60,28 @@ export default function PostDetail() {
     };
 
     const handleCommentUpdate = (updatedComment) => {
-        // Replace the old comment with the updated one in our array
         setComments(comments.map(c => c.id === updatedComment.id ? updatedComment : c));
     };
 
     const handleCommentDelete = (deletedCommentId) => {
-        // Filter out the deleted comment from our array
         setComments(comments.filter(c => c.id !== deletedCommentId));
     };
 
     if (loading) {
-        return <div className="text-center py-20 text-text-secondary">Loading article...</div>;
+        return <div className="text-center py-24 text-text-secondary">Loading article...</div>;
     }
 
     if (error || !post) {
         return (
-            <div className="max-w-2xl mx-auto py-20 text-center flex flex-col items-center">
-                <h2 className="text-2xl font-bold text-text-primary mb-4">Oops!</h2>
+            <div className="max-w-2xl mx-auto py-32 px-6 text-center flex flex-col items-center">
+                <h2 className="text-2xl font-serif font-bold text-text-primary mb-4">Oops!</h2>
                 <p className="text-red-600 bg-red-50 p-4 rounded-md inline-block border border-red-200 mb-6">
                     {error || 'Post not found.'}
                 </p>
 
-                {/* Preserved your nicely styled 404 Back Button! */}
                 <Link
                     to="/"
-                    className="inline-flex items-center gap-2 px-4 py-2 mt-4 bg-surface border border-border rounded-full text-sm font-medium text-text-secondary hover:text-text-primary hover:bg-gray-50 hover:shadow-sm transition-all w-max mx-auto"
+                    className="inline-flex items-center gap-2 px-6 py-2.5 mt-4 bg-surface border border-border rounded-full text-sm font-medium text-text-secondary hover:text-text-primary hover:bg-gray-50 hover:shadow-sm transition-all w-max mx-auto"
                 >
                     <span aria-hidden="true">&larr;</span> Back to Home
                 </Link>
@@ -102,41 +94,48 @@ export default function PostDetail() {
     });
 
     return (
-        <article className="max-w-3xl mx-auto py-8">
-            {/* Preserved your nicely styled standard Back Button! */}
+        // 🚨 Here is where we added the padding and max-width back!
+        <article className="max-w-4xl mx-auto px-6 py-12 md:py-20">
+            
             <Link
                 to="/"
-                className="inline-flex items-center gap-2 px-4 py-2 mb-8 bg-surface border border-border rounded-full text-sm font-medium text-text-secondary hover:text-text-primary hover:bg-gray-50 hover:shadow-sm transition-all w-max"
+                className="group inline-flex items-center gap-2 mb-12 text-sm font-medium text-text-secondary hover:text-text-primary transition-colors"
             >
-                <span aria-hidden="true">&larr;</span> Back to posts
+                <span aria-hidden="true" className="group-hover:-translate-x-1 transition-transform">&larr;</span> 
+                Back to posts
             </Link>
 
-            <header className="mb-10 border-b border-border pb-8">
-                <h1 className="text-4xl md:text-5xl font-bold text-text-primary mb-6 leading-tight">
+            <header className="mb-12 border-b border-border pb-10">
+                {/* 🚨 Upgraded to font-serif and slightly larger sizes */}
+                <h1 className="text-4xl md:text-6xl font-serif font-bold text-text-primary mb-6 leading-tight">
                     {post.title}
                 </h1>
-                <div className="text-text-secondary flex items-center gap-2">
-                    <span>By <span className="font-medium text-text-primary">{post.author?.username || 'Unknown'}</span></span>
-                    <span>•</span>
-                    <time>{formattedDate}</time>
+                <div className="text-text-secondary flex items-center gap-2 text-lg">
+                    <span>By <span className="font-semibold text-text-primary">{post.author?.username || 'Unknown'}</span></span>
+                    <span className="text-sm">●</span>
+                    <time className="italic">{formattedDate}</time>
                 </div>
             </header>
 
-            <div className="prose prose-lg max-w-none text-text-primary whitespace-pre-wrap leading-relaxed">
+            <div className="prose prose-lg md:prose-xl max-w-none text-text-primary whitespace-pre-wrap leading-relaxed">
                 {post.content}
             </div>
 
-            <hr className="my-12 border-border" />
+            <hr className="my-16 border-border" />
 
-            {/* --- COMMENTS SECTION --- */}
             <section>
-                <h3 className="text-2xl font-bold text-text-primary mb-6">
-                    Comments ({comments.length})
-                </h3>
+                <div className="flex items-center gap-3 mb-8">
+                    <h3 className="text-3xl font-serif font-bold text-text-primary">
+                        Comments
+                    </h3>
+                    {/* Nice pill-badge for the comment count */}
+                    <span className="bg-accent/10 text-accent font-semibold px-3 py-1 rounded-full text-sm">
+                        {comments.length}
+                    </span>
+                </div>
 
-                {/* The Comment Form */}
                 {user ? (
-                    <form onSubmit={handleCommentSubmit} className="mb-10 bg-surface border border-border p-5 rounded-lg shadow-sm">
+                    <form onSubmit={handleCommentSubmit} className="mb-12 bg-surface border border-border p-6 rounded-xl shadow-sm focus-within:ring-2 focus-within:ring-accent/20 transition-all">
                         {commentError && (
                             <div className="bg-red-50 text-red-600 p-3 rounded-md mb-4 text-sm border border-red-200">
                                 {commentError}
@@ -144,32 +143,31 @@ export default function PostDetail() {
                         )}
 
                         <textarea
-                            className="w-full px-4 py-3 border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-accent mb-3 min-h-25 resize-y"
+                            className="w-full px-4 py-3 bg-transparent border-none rounded-md focus:outline-none focus:ring-0 mb-3 min-h-25 resize-y text-lg placeholder:text-gray-400"
                             placeholder="What are your thoughts?"
                             value={newComment}
                             onChange={(e) => setNewComment(e.target.value)}
                             required
                         />
-                        <div className="flex justify-end">
+                        <div className="flex justify-end border-t border-border pt-4">
                             <button
                                 type="submit"
                                 disabled={isSubmitting || !newComment.trim()}
-                                className="bg-accent text-white px-6 py-2 rounded-md font-medium hover:bg-opacity-90 transition-opacity disabled:opacity-50 cursor-pointer"
+                                className="bg-text-primary text-surface px-8 py-2.5 rounded-full font-medium hover:bg-accent transition-colors disabled:opacity-50 cursor-pointer"
                             >
                                 {isSubmitting ? 'Posting...' : 'Post Comment'}
                             </button>
                         </div>
                     </form>
                 ) : (
-                    <div className="mb-10 bg-gray-50 border border-border p-6 rounded-lg text-center text-text-secondary">
-                        Please <Link to="/login" className="text-accent hover:underline font-medium">log in</Link> to leave a comment.
+                    <div className="mb-12 bg-background border border-border p-8 rounded-xl text-center text-text-secondary">
+                        Please <Link to="/login" className="text-accent hover:underline font-semibold">log in</Link> to join the conversation.
                     </div>
                 )}
 
-                {/* The Comments List */}
-                <div className="space-y-4">
+                <div className="space-y-6">
                     {comments.length === 0 ? (
-                        <p className="text-text-secondary text-center py-6 italic">No comments yet. Be the first!</p>
+                        <p className="text-text-secondary text-center py-8 italic text-lg">No comments yet. Be the first!</p>
                     ) : (
                         comments.map((comment) => (
                             <CommentItem key={comment.id} comment={comment} onUpdate={handleCommentUpdate} onDelete={handleCommentDelete}/>
@@ -177,7 +175,6 @@ export default function PostDetail() {
                     )}
                 </div>
             </section>
-
         </article>
     );
 }
