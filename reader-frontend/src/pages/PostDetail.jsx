@@ -99,7 +99,6 @@ export default function PostDetail() {
     });
 
     return (
-        // 🚨 Here is where we added the padding and max-width back!
         <article className="max-w-4xl mx-auto px-6 py-12 md:py-20">
 
             <Link
@@ -111,74 +110,109 @@ export default function PostDetail() {
             </Link>
 
             <header className="mb-12 border-b border-border pb-10">
-                <h1 className="text-4xl md:text-6xl font-serif font-bold text-text-primary mb-6 leading-tight">
+                <h1 className="text-4xl md:text-6xl font-serif font-bold text-text-primary mb-8 leading-tight">
                     {post.title}
                 </h1>
 
-                {/* 🚨 CHANGED: Stacks on mobile, inline on larger screens! */}
-                <div className="text-text-secondary flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2 text-base md:text-lg">
-                    <span>By <span className="font-semibold text-text-primary">{post.author?.username || 'Unknown'}</span></span>
-                    <span className="hidden sm:inline text-sm">●</span>
-                    <time className="italic text-text-secondary/80">{formattedDate}</time>
+                {/* Minimal Avatar Header! */}
+                <div className="flex items-center gap-4">
+                    <img 
+                        src="https://github.com/xsupremeyx.png" 
+                        alt="XSupremeYX" 
+                        className="w-12 h-12 rounded-full border-2 border-accent shadow-sm"
+                    />
+                    <div className="flex flex-col">
+                        <span className="font-semibold text-text-primary">XSupremeYX</span>
+                        <time className="text-sm text-text-secondary italic">{formattedDate}</time>
+                    </div>
                 </div>
             </header>
 
-            <div className="max-w-none text-text-primary whitespace-pre-wrap leading-relaxed">
+            {/* Standard, clean text layout (Removed the Drop Cap entirely!) */}
+            <div className="max-w-none text-text-primary whitespace-pre-wrap leading-relaxed text-lg md:text-xl">
                 {post.content}
+            </div>
+
+            {/* Author Bio Card */}
+            <div className="mt-20 p-8 bg-surface border border-border rounded-2xl flex flex-col sm:flex-row items-center sm:items-start gap-6 shadow-sm">
+                <img 
+                    src="https://github.com/xsupremeyx.png" 
+                    alt="XSupremeYX" 
+                    className="w-24 h-24 rounded-full border-4 border-background shadow-md"
+                />
+                <div className="text-center sm:text-left flex-1">
+                    <h4 className="text-2xl font-serif font-bold text-text-primary mb-2">XSupremeYX</h4>
+                    <p className="text-text-secondary mb-4 italic">"Writing things down."</p>
+                    <div className="flex flex-wrap justify-center sm:justify-start gap-6">
+                        <a href="https://github.com/xsupremeyx" target="_blank" rel="noopener noreferrer" className="text-text-secondary hover:text-accent transition-colors flex items-center gap-2 font-medium">
+                            <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                <path fillRule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clipRule="evenodd" />
+                            </svg>
+                            GitHub
+                        </a>
+                        {/* Space saved for LinkedIn */}
+                        {/* Space saved for Personal Website */}
+                    </div>
+                </div>
             </div>
 
             <hr className="my-16 border-border" />
 
-            <section>
-                <div className="flex items-center gap-3 mb-8">
-                    <h3 className="text-3xl font-serif font-bold text-text-primary">
-                        Comments
-                    </h3>
-                    {/* Nice pill-badge for the comment count */}
-                    <span className="bg-accent/10 text-accent font-semibold px-3 py-1 rounded-full text-sm">
-                        {comments.length}
-                    </span>
-                </div>
+            {/* Distinct Comments Section! */}
+            <section className="bg-surface/60 border border-border/80 rounded-3xl p-6 md:p-10 shadow-sm relative">
+                {/* A subtle absolute gradient just to give the comments box some depth */}
+                <div className="absolute inset-0 bg-linear-to-b from-transparent to-black/2 rounded-3xl pointer-events-none" />
 
-                {user ? (
-                    <form onSubmit={handleCommentSubmit} className="mb-12 bg-surface border border-border p-6 rounded-xl shadow-sm focus-within:ring-2 focus-within:ring-accent/20 transition-all">
-                        {commentError && (
-                            <div className="bg-red-50 text-red-600 p-3 rounded-md mb-4 text-sm border border-red-200">
-                                {commentError}
-                            </div>
-                        )}
-
-                        <textarea
-                            className="w-full px-4 py-3 bg-transparent border-none rounded-md focus:outline-none focus:ring-0 mb-3 min-h-25 resize-y text-lg placeholder:text-gray-400"
-                            placeholder="What are your thoughts?"
-                            value={newComment}
-                            onChange={(e) => setNewComment(e.target.value)}
-                            required
-                        />
-                        <div className="flex justify-end border-t border-border pt-4">
-                            <button
-                                type="submit"
-                                disabled={isSubmitting || !newComment.trim()}
-                                className="bg-text-primary text-surface px-8 py-2.5 rounded-full font-medium hover:bg-accent transition-colors disabled:opacity-50 cursor-pointer"
-                            >
-                                {isSubmitting ? 'Posting...' : 'Post Comment'}
-                            </button>
-                        </div>
-                    </form>
-                ) : (
-                    <div className="mb-12 bg-background border border-border p-8 rounded-xl text-center text-text-secondary">
-                        Please <Link to="/login" className="text-accent hover:underline font-semibold">log in</Link> to join the conversation.
+                <div className="relative z-10">
+                    <div className="flex items-center gap-3 mb-8">
+                        <h3 className="text-3xl font-serif font-bold text-text-primary">
+                            Comments
+                        </h3>
+                        <span className="bg-accent/10 text-accent font-semibold px-3 py-1 rounded-full text-sm">
+                            {comments.length}
+                        </span>
                     </div>
-                )}
 
-                <div className="space-y-6">
-                    {comments.length === 0 ? (
-                        <p className="text-text-secondary text-center py-8 italic text-lg">No comments yet. Be the first!</p>
+                    {user ? (
+                        <form onSubmit={handleCommentSubmit} className="mb-12 bg-surface border border-border p-6 rounded-xl shadow-sm focus-within:ring-2 focus-within:ring-accent/20 transition-all">
+                            {commentError && (
+                                <div className="bg-red-50 text-red-600 p-3 rounded-md mb-4 text-sm border border-red-200">
+                                    {commentError}
+                                </div>
+                            )}
+
+                            <textarea
+                                className="w-full px-4 py-3 bg-transparent border-none rounded-md focus:outline-none focus:ring-0 mb-3 min-h-25 resize-y text-lg placeholder:text-gray-400"
+                                placeholder="What are your thoughts?"
+                                value={newComment}
+                                onChange={(e) => setNewComment(e.target.value)}
+                                required
+                            />
+                            <div className="flex justify-end border-t border-border pt-4">
+                                <button
+                                    type="submit"
+                                    disabled={isSubmitting || !newComment.trim()}
+                                    className="bg-text-primary text-surface px-8 py-2.5 rounded-full font-medium hover:bg-accent transition-colors disabled:opacity-50 cursor-pointer"
+                                >
+                                    {isSubmitting ? 'Posting...' : 'Post Comment'}
+                                </button>
+                            </div>
+                        </form>
                     ) : (
-                        comments.map((comment) => (
-                            <CommentItem key={comment.id} comment={comment} onUpdate={handleCommentUpdate} onDelete={handleCommentDelete} />
-                        ))
+                        <div className="mb-12 bg-background border border-border p-8 rounded-xl text-center text-text-secondary">
+                            Please <Link to="/login" className="text-accent hover:underline font-semibold">log in</Link> to join the conversation.
+                        </div>
                     )}
+
+                    <div className="space-y-6">
+                        {comments.length === 0 ? (
+                            <p className="text-text-secondary text-center py-8 italic text-lg">No comments yet. Be the first!</p>
+                        ) : (
+                            comments.map((comment) => (
+                                <CommentItem key={comment.id} comment={comment} onUpdate={handleCommentUpdate} onDelete={handleCommentDelete} />
+                            ))
+                        )}
+                    </div>
                 </div>
             </section>
         </article>

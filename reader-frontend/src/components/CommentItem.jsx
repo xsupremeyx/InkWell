@@ -74,7 +74,7 @@ export default function CommentItem({ comment, onUpdate, onDelete }) {
           <div className="flex items-center gap-3 text-sm">
             <button 
               onClick={() => setIsEditing(true)}
-              className="text-text-secondary hover:text-accent transition-colors"
+              className="text-text-secondary hover:text-accent transition-colors cursor-pointer"
             >
               Edit
             </button>
