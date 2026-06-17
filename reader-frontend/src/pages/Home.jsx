@@ -3,7 +3,7 @@ import { apiFetch } from '../api/client';
 import PostCard from '../components/PostCard';
 
 // ✏️ Change this URL anytime to swap the hero background!
-const HERO_IMAGE_URL = '/hero.jpg';
+const HERO_IMAGE_URL = '/hero.webp';
 
 export default function Home() {
   const [posts, setPosts] = useState([]);

@@ -45,7 +45,7 @@ export default function Register() {
         <div className="hidden md:flex flex-col justify-center relative w-1/2 p-12 lg:p-16 overflow-hidden">
           <div 
             className="absolute inset-0 z-0 bg-cover bg-center"
-            style={{ backgroundImage: `url('/register-bg.jpg')` }}
+            style={{ backgroundImage: `url('/register-bg.webp')` }}
           />
           <div className="absolute inset-0 z-0 bg-black/50" /> {/* Slightly darker overlay here */}
           
