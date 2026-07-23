@@ -5,7 +5,7 @@ A full-stack blog platform with a dedicated REST API backend and two separate Re
 **Live Demo**
 - Reader Frontend: https://ink-well-alpha.vercel.app
 - Author Frontend: https://inkwell-author.vercel.app
-- API: https://inkwell-api-4qi0.onrender.com
+- API: [https://inkwell-api-4qi0.onrender.com](https://dashboard.heroku.com/apps/inkwell-api)
 
 ---
 
@@ -596,7 +596,7 @@ Delete a comment. Comment owner or any AUTHOR can delete.
 | Layer | Service |
 |---|---|
 | Database | [Neon](https://neon.tech) (PostgreSQL) |
-| API | [Render](https://render.com) |
+| API | [Heroku](https://dashboard.heroku.com/apps/inkwell-api) |
 | Reader Frontend | [Vercel](https://vercel.com) |
 | Author Frontend | [Vercel](https://vercel.com) |
 
